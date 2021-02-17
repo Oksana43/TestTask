@@ -1,5 +1,6 @@
 package com.task.demo.service.impl;
 
+import com.task.demo.dto.UniqueWordDto;
 import com.task.demo.entity.UniqueWord;
 import com.task.demo.repository.UniqueWordRepository;
 import com.task.demo.service.HTMLParserService;
@@ -13,6 +14,7 @@ import java.io.*;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -23,20 +25,31 @@ public class HTMLParserServiceImpl implements HTMLParserService {
 
     private static final String FILE_NAME = "myFile.txt";
     private final static String SEPARATOR = "[.,!\\?\";:\\[\\]()_<>^'{}|«»…·/\\n\\r\\t]";
+    private String lastUrl = null;
 
     private final UniqueWordRepository uniqueWordRepository;
 
     @Transactional
     @Override
     @SneakyThrows
-    public void getUniqueWords(String url) {
-        try {
-            savePage(url);
-            extractText();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
+    public List<UniqueWordDto> getUniqueWords(String url) {
+        if (!lastUrl.equals(url)) {
+            lastUrl = url;
+            try {
+                savePage(url);
+                extractText();
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw e;
+            }
         }
+
+        return uniqueWordRepository.findAll().stream().map(word -> {
+            UniqueWordDto uniqueWordDto = new UniqueWordDto();
+            uniqueWordDto.setName(word.getName());
+            uniqueWordDto.setCount(word.getCount());
+            return uniqueWordDto;
+        }).collect(Collectors.toList());
     }
 
     private void savePage(String url) throws IOException {

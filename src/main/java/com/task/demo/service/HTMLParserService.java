@@ -1,7 +1,11 @@
 package com.task.demo.service;
 
+import com.task.demo.dto.UniqueWordDto;
+
+import java.util.List;
+
 public interface HTMLParserService {
 
-    void getUniqueWords(String url);
+    List<UniqueWordDto> getUniqueWords(String url);
 
 }
