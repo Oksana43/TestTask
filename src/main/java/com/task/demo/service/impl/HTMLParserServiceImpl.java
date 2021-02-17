@@ -25,7 +25,7 @@ public class HTMLParserServiceImpl implements HTMLParserService {
 
     private static final String FILE_NAME = "myFile.txt";
     private final static String SEPARATOR = "[.,!\\?\";:\\[\\]()_<>^'{}|«»…·/\\n\\r\\t]";
-    private String lastUrl = null;
+    private String lastUrl = "";
 
     private final UniqueWordRepository uniqueWordRepository;
 
