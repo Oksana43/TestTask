@@ -58,7 +58,7 @@ public class HTMLParserServiceImpl implements HTMLParserService {
             writer.write("");
             writer.flush();
         } catch (IOException ex) {
-            System.out.println(ex.getMessage());//3456
+            System.out.println(ex.getMessage());
         }
 
         try {
@@ -71,7 +71,7 @@ public class HTMLParserServiceImpl implements HTMLParserService {
                 }
                 writer.flush();
             } catch (IOException ex) {
-                System.out.println(ex.getMessage());//1324
+                System.out.println(ex.getMessage());
                 throw ex;
             }
             in.close();
